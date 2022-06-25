@@ -1,11 +1,12 @@
+import React from 'react'
 import { ReactComponent as User } from '../assets/User.svg'
 import { ReactComponent as Notif } from '../assets/Notif.svg'
 import { ReactComponent as Chat } from '../assets/Chat.svg'
-
-
+import UserPopUp from './UserPopUp'
 
 const Nav = (props) => {
-    const { status, signIn } = props
+    const { status, signIn, signOut } = props;
+    const [userPopUp, setUserPopUp] = React.useState(false)
     return (
         <div className="nav">
             <div className="lheader">
@@ -28,16 +29,17 @@ const Nav = (props) => {
                     :
                     <div className="nav--links">
                         <div className="nav--content nav--logo">
-                            <Chat className='chatLogo' />
+                            <Chat className='chatLogo svglogo' />
                         </div>
                         <div className="nav--content nav--logo">
-                            <Notif className='bellLogo' />
+                            <Notif className='bellLogo svglogo' />
                         </div>
-                        <div className="nav--content nav--logo">
-                            <User className='userLogo' />
+                        <div className="nav--content nav--logo" onClick={() => setUserPopUp(state => !state)}>
+                            <User className='userLogo svglogo' />
                         </div>
+                        {userPopUp && <><div className='tri'></div> <UserPopUp signOut={signOut} setUserPopUp={setUserPopUp}/></>}
                         <div className='line'></div>
-                        <div className="postjob">Employers / Post job</div>
+                        <div className="postjob" onClick={() => console.log(userPopUp)}>Employers / Post job</div>
 
                     </div>
                 }
