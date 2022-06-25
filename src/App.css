@@ -1,0 +1,94 @@
+* {
+  margin: 0;
+  font-family: 'Noto Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif
+}
+
+.nav {
+  display: flex;
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 3.25rem;
+  background-color: #ffffff;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  border-bottom: 0.0625rem solid #e4e2e0;
+}
+
+.lheader,
+.nav--links {
+  align-items: center;
+  display: flex;
+}
+
+.nav--links {
+  height: 100%;
+  font-size: 14px;
+}
+
+.logo {
+  width: 127px;
+  height: 46px;
+  padding: 12.6px 14px;
+}
+
+.nav--content {
+  display: flex;
+  margin-right: 1.5rem;
+  color: #2D2D2D;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  padding-top: 16px;
+}
+
+.userLogo {
+  width: 21px;
+}
+
+.bellLogo {
+  width: 26px;
+}
+
+.chatLogo {
+  width: 24px;
+}
+
+.signin {
+  color: #2557a7;
+  font-weight: bold;
+}
+
+.nav--content:hover, .postjob:hover {
+  cursor: pointer;
+  box-sizing: border-box;
+  border-bottom: 0.125rem solid #2557a7;
+  margin-bottom: -0.125rem;
+}
+
+.nav--logo {
+  margin: 0;
+  padding: 21px 10px 9px;
+  margin: 0px 10px;
+}
+
+.postjob {
+  padding-top: 16px;
+  display: flex;
+  height: 100%;
+  align-items: center;
+  margin: 0px 20px;
+  box-sizing: border-box;
+  color:#2D2D2D
+
+}
+
+.line {
+  box-sizing: border-box;
+    margin: 0;
+    min-width: 0;
+    width: 0.0625rem;
+    height: 1.55rem;
+    background-color: #d4d2d0;
+    margin-top: 0.75rem;
+}
