@@ -8,7 +8,7 @@ import { ReactComponent as Help } from '../assets/Help.svg'
 const UserPopUp = (props) => {
     return (
         <div className="popup">
-            <div className="popup--email">woiehfowiehf@gmail.cum</div>
+            <div className="popup--email">{props.email}</div>
             <div className="popup--content"><Profile className='popup--svg svglogo'/><div>Profile</div></div>
             <div className="popup--content"><Heart className='popup--svg svglogo'/><div>My jobs</div></div>
             <div className="popup--content"><Reviews className='popup--svg svglogo'/><div>My reviews</div></div>
