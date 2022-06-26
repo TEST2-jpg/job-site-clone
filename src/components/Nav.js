@@ -3,10 +3,17 @@ import { ReactComponent as User } from '../assets/User.svg'
 import { ReactComponent as Notif } from '../assets/Notif.svg'
 import { ReactComponent as Chat } from '../assets/Chat.svg'
 import UserPopUp from './UserPopUp'
+import { auth } from '../Firebase'
+import { Link } from 'react-router-dom'
+
 
 const Nav = (props) => {
     const { status, signIn, signOut } = props;
     const [userPopUp, setUserPopUp] = React.useState(false)
+    function getEmail() {
+        return auth.currentUser.email;
+    }
+
     return (
         <div className="nav">
             <div className="lheader">
@@ -37,10 +44,9 @@ const Nav = (props) => {
                         <div className="nav--content nav--logo" onClick={() => setUserPopUp(state => !state)}>
                             <User className='userLogo svglogo' />
                         </div>
-                        {userPopUp && <><div className='tri'></div> <UserPopUp signOut={signOut} setUserPopUp={setUserPopUp}/></>}
+                        {userPopUp && <><div className='tri'></div> <UserPopUp email={getEmail()} signOut={signOut} setUserPopUp={setUserPopUp} /></>}
                         <div className='line'></div>
-                        <div className="postjob" onClick={() => console.log(userPopUp)}>Employers / Post job</div>
-
+                        <div className="postjob"><Link to="/test">Employers / Post job</Link></div>
                     </div>
                 }
             </div>
