@@ -2,15 +2,21 @@ import React from "react"
 import { setDoc, doc, serverTimestamp, addDoc, collection, query, orderBy, getDocs } from 'firebase/firestore';
 import { db } from "../Firebase";
 import { ReactComponent as Navform } from '../assets/Navform.svg'
-
+import { ReactComponent as FormHelp } from '../assets/FormHelp.svg'
+import BasicInfo from "./forms/BasicInfo";
+import Details from "./forms/Details";
+import Description from "./forms/Description";
+import { Link } from "react-router-dom";
 
 const Jobform = () => {
     document.body.style = 'background: rgb(243 242 241)';
+    const [load, setLoad] = React.useState()
     const [formData, setFormData] = React.useState({
         title: '',
         company: '',
         location: '',
         type: '',
+        shift: '',
         pay: '',
         description: '',
         time: serverTimestamp()
@@ -22,8 +28,43 @@ const Jobform = () => {
             [e.target.name]: e.target.value
         }))
     }
+    const handleShift = (e) => {
+        console.log(`${e.target.value} is ${e.target.checked}`);
+        console.log(formData);
+        if (e.target.checked) {
+            setFormData(d => ({
+                ...d,
+                shift: [...formData.type, e.target.value],
+            }));
+        }
+
+        else {
+            console.log()
+            setFormData(d => ({
+                ...d,
+                shift: formData.type.filter((ee) => ee !== e.target.value),
+            }));
+        }
+    }
+    const handleCheck = (e) => {
+        console.log(`${e.target.value} is ${e.target.checked}`);
+        console.log(formData);
+        if (e.target.checked) {
+            setFormData(d => ({
+                ...d,
+                type: [...formData.type, e.target.value],
+            }));
+        }
+
+        else {
+            console.log()
+            setFormData(d => ({
+                ...d,
+                type: formData.type.filter((ee) => ee !== e.target.value),
+            }));
+        }
+    }
     async function submitForm(e) {
-        e.preventDefault()
         await addDoc(collection(db, "jobs"), formData);
         setFormData(data => ({
             title: '',
@@ -34,44 +75,44 @@ const Jobform = () => {
             description: '',
             time: ''
         }))
+        window.location.reload(false)
+
     }
+    const [formPage, setFormPage] = React.useState(1)
+    function nxtpg() {
+        setFormPage(prev => prev + 1)
+        console.log(formPage)
+    }
+    function prvpg() {
+        if (formPage < 1) {
+            setFormPage(1)
+        }
+        setFormPage(prev => prev - 1)
+        console.log(formPage)
+    }
+
+    function valitade(e) {
+
+        e.preventDefault()
+        nxtpg()
+    }
+
     return (
         <>
-            <div className='jobfeed--nav'><Navform style={{width: "80px"}}/><span className="needhelp">Need help</span></div>
-            <div style={{width:'100%', height:'16px', backgroundColor:'white'}}></div>
+            <div className='jobfeed--nav'><Navform style={{ width: "80px" }} /><span className="needhelp" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Need help<FormHelp style={{ width: "16.33px", marginLeft: '7px' }} /></span></div>
+            <div className="loadbar"><div className="progress" style={{ 'width': `${load}%`, backgroundColor: '#2557A7' }}></div></div>
             <div className="form--container">
-                <form onSubmit={submitForm}>
-                    <div className="form--card">
-                        <label>Job title
-                            <input type="text" name="title" onChange={handleChange} value={formData.title}></input>
-                        </label>
+                <form onSubmit={valitade}>
+                    {formPage <= 1 && <BasicInfo handleChange={handleChange} setFormPage={setFormPage} title={formData.title} company={formData.company} location={formData.location} setLoad={setLoad} pay={formData.pay} formPage={formPage} />}
+                    {formPage === 2 && <Details setLoad={setLoad} setFormPage={setFormPage} handleCheck={handleCheck} setFormData={setFormData} handleShift={handleShift} />}
+                    {formPage === 3 && <Description handleChange={handleChange} setFormPage={setFormPage} description={formData.description} setLoad={setLoad} formPage={formPage} submitForm={submitForm} />}
+                    <div className="form--card btncont">
+                        <button type='button' onClick={prvpg} className="btn prvbtn">Back</button>
+                        <div>
+                            {formPage === 4 && <Link to="/forms"><button className="btn" onClick={submitForm}>Submit</button></Link>}
+                            {formPage !== 4 && <button className="btn">Save and continue</button>}
+                        </div>
                     </div>
-                    <div className="form--card">
-                        <label>Your company's name
-                            <input type="text" name="company" onChange={handleChange} value={formData.company}></input>
-                        </label>
-                    </div>
-                    <div className="form--card">
-                        <label>Where would you like to advertise this job?
-                            <input type="text" name="location" onChange={handleChange} value={formData.location}></input>
-                        </label>
-                    </div>
-                    <div className="form--card">
-                        <label>What is the job type?
-                            <input type="text" name="type" onChange={handleChange} value={formData.type}></input>
-                        </label>
-                    </div>
-                    <div className="form--card">
-                        <label>What is the pay?
-                            <input type="text" name="pay" onChange={handleChange} value={formData.pay}></input>
-                        </label>
-                    </div>
-                    <div className="form--card">
-                        <label>Job description
-                            <input type="text" name="description" onChange={handleChange} value={formData.description}></input>
-                        </label>
-                    </div>
-                    <button>SUBMIT</button>
                 </form>
             </div>
         </>
