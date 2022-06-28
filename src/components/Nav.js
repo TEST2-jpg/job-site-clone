@@ -31,7 +31,7 @@ const Nav = (props) => {
                         <div className="nav--content signin" onClick={signIn}>Sign in</div>
                         <div className='line'></div>
 
-                        <div className="postjob">Employers / Post job</div>
+                        <div className="postjob" onClick={signIn}>Employers / Post job</div>
                     </div>
                     :
                     <div className="nav--links">
@@ -46,7 +46,7 @@ const Nav = (props) => {
                         </div>
                         {userPopUp && <><div className='tri'></div> <UserPopUp email={getEmail()} signOut={signOut} setUserPopUp={setUserPopUp} /></>}
                         <div className='line'></div>
-                        <div className="postjob"><Link to="/test">Employers / Post job</Link></div>
+                        <Link to="/forms"><div className="postjob">Employers / Post job</div></Link>
                     </div>
                 }
             </div>
